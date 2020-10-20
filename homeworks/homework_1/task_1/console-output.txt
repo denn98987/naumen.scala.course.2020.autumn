@@ -1,0 +1,20 @@
+C:\Users\79991\IdeaProjects\naumen.scala.course.2020.autumn>scala
+Welcome to Scala 2.12.10 (Java HotSpot(TM) 64-Bit Server VM, Java 15).
+Type in expressions for evaluation. Or try :help.
+
+scala> val myName = "Dennis"
+myName: String = Dennis
+
+scala> print(s"Hello Scala! This is ${myName}")
+Hello Scala! This is Dennis
+
+scala> val hellos = Map("eng" -> "Hello", "esp" -> "Hola", "ger" -> "Guten Tag")
+hellos: scala.collection.immutable.Map[String,String] = Map(eng -> Hello, esp -> Hola, ger -> Guten Tag)
+
+scala> def sayHello(lang:String, name:String) = print(s"${hellos(lang)} Scala! This is ${name}")
+sayHello: (lang: String, name: String)Unit
+
+scala> sayHello("esp", myName)
+Hola Scala! This is Dennis
+scala> sayHello("esp", myName.reverse)
+Hola Scala! This is sinneD
