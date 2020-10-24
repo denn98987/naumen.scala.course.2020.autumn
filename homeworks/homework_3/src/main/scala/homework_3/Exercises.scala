@@ -1,4 +1,5 @@
 package homework_3
+import scala.reflect.ClassTag
 
 object Exercises {
 
@@ -12,24 +13,28 @@ object Exercises {
      * Реализуйте функцию тремя разными способами, отличающимися тем, как определяется какой тип имеет значение переданное в аргументе. 
      * Определение типа необходимо для реализации специальной логики работы с Boolean значениями, которая описана в условии выше.
      */
+    val trueStr = "правда"
+    val falseStr = "ложь"
     def prettyBooleanFormatter1(x: Any): String =
         if (x.isInstanceOf[Boolean])
-            if (x.asInstanceOf[Boolean]) "правда"
-            else "ложь"
+            if (x.asInstanceOf[Boolean]) trueStr
+            else falseStr
         else x.toString
 
     def prettyBooleanFormatter2(x: Any): String = x match {
-        case bool: Boolean => if (bool) "правда" else "ложь"
+        case bool: Boolean  => if (bool) trueStr else falseStr
         case _ => x.toString
     }
 
-    def prettyBooleanFormatter3(x: Any): String = if (x.getClass == Boolean)
-        if (x.asInstanceOf[Boolean])
-            "правда"
-        else
-            "ложь"
-    else x.toString
-
+    def prettyBooleanFormatter3(x: Any): String = {
+        val y: Any = false
+        val B = y.getClass
+        val matchX = x.getClass
+        matchX match {
+            case B => if (x.asInstanceOf[Boolean]) trueStr else falseStr
+            case _ => x.toString
+        }
+    }
 
     /**
      * Задание №2
@@ -54,11 +59,13 @@ object Exercises {
      * Реализуйте на основе нее 3 варианта суммирования 2х чисел, отличающиеся способом передачи этих 2х чисел в функцию sumIntegers.
      * Как минимум одна из реализаций должна использовать тип данных (класс) написанный вами самостоятельно.
      */ 
-    def sum1(x: Int, y: Int): Int = sumIntegers((x, y))
+    def sum1(x: Int, y: Int): Int = sumIntegers(List(x, y))
     def sum2(x: Int, y: Int): Int = sumIntegers(Seq(x, y))
     def sum3(x: Int, y: Int): Int = sumIntegers(Iter(x, y))
-    case class Iter[T](x: T, y: T) extends Iterable[T] {
-        override def iterator: Iterator[T] = Iterator(x, y)
+
+
+    case class Iter[A](x: A, y: A) extends Iterable[A] {
+        override def iterator: Iterator[A] = Iterator(x, y)
     }
 
 }
