@@ -9,15 +9,27 @@ object Exercises {
 
 
 
-  case class Shelter ...
+  case class Shelter[+A <: Animal](animals:List[A]){
+    def +[C >: A <:Animal](newAnimal: C) = Shelter(animals :+ newAnimal)
+    def ++[C <: Animal](otherAnimals: Shelter[C]) = Shelter(animals ++ otherAnimals.animals)
+    def getNames = animals.map(_.name)
+    def feed(food: Food[A]) = animals.map(food.feed)
+  }
 
 
 
-  trait Food ...
+  trait Food[-A<:Animal]{
+    val name = "meat"
+    def feed(animal: A) = s"${animal.name} eats ${this.name}"
+  }
 
-  case object Meat extends Food[Animal] ...
+  case object Meat extends Food[Animal]
 
-  case object Milk extends Food[Cat] ...
+  case object Milk extends Food[Cat] {
+    override val name: String = "milk"
+  }
 
-  case object Bread extends Food[Dog] ...
+  case object Bread extends Food[Dog]{
+    override val name: String = "bread"
+  }
 }
